@@ -1,0 +1,53 @@
+ /* Light Mode (Default) */
+.light-mode {
+    --bg-color: #f8f9fa;
+    --text-color: #343a40;
+    --card-bg: #ffffff;
+    --border-color: #e9ecef;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode */
+.dark-mode {
+    --bg-color: #1a1a1a;
+    --text-color: #f8f9fa;
+    --card-bg: #2d2d2d;
+    --border-color: #444;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Apply theme variables */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+header, 
+footer, 
+.feature-card, 
+.booking-container, 
+.queue-container, 
+.modal-content, 
+.slip, 
+.patient-card, 
+.upcoming-patient {
+    background-color: var(--card-bg);
+}
+
+input, 
+select, 
+#appointments-list th, 
+#appointments-list td {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.box-shadow {
+    box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+/* Dark mode toggle icon */
+.dark-mode #theme-toggle i.fa-moon::before {
+    content: "\f185"; /* Sun icon */
+}

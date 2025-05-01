@@ -1,0 +1,195 @@
+<!-- 
+Project: NextInCare
+Developed by: Arman Shaikh
+Year: 2025
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - NextInCare</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-mode">
+    <header>
+        <div class="logo-container">
+            <img src="assets/logo.svg" alt="NextInCare Logo" class="logo">
+            <h1>NextInCare</h1>
+        </div>
+        <div class="header-controls">
+            <button id="theme-toggle" class="btn-icon" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="index.html" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Home
+            </a>
+        </div>
+    </header>
+
+    <main class="booking-container">
+        <h2><i class="fas fa-calendar-plus"></i> Book Appointment</h2>
+        
+        <form id="booking-form">
+            <div class="form-group">
+                <label for="patient-name"><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" id="patient-name" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="patient-age"><i class="fas fa-birthday-cake"></i> Age</label>
+                    <input type="number" id="patient-age" min="1" max="120" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="patient-blood-group"><i class="fas fa-tint"></i> Blood Group</label>
+                    <select id="patient-blood-group" required>
+                        <option value="">Select</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="patient-phone"><i class="fas fa-phone"></i> Phone Number</label>
+                <input type="tel" id="patient-phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="appointment-type"><i class="fas fa-stethoscope"></i> Service Needed</label>
+                <select id="appointment-type" required>
+                    <option value="">Select Service</option>
+                    <option value="General Checkup">General Checkup</option>
+                    <option value="Dental Consultation">Dental Consultation</option>
+                    <option value="Vaccination">Vaccination</option>
+                    <option value="Follow-Up">Follow-Up</option>
+                    <option value="Urgent Care">Urgent Care</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="booking-type"><i class="fas fa-calendar-alt"></i> Booking Type</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="booking-type" value="earliest" checked>
+                        <span>Earliest Available Slot</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="booking-type" value="lowest-wait">
+                        <span>Lowest Wait Time</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="booking-type" value="walk-in">
+                        <span>Walk-In</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group" id="payment-section">
+                <label for="payment-amount"><i class="fas fa-money-bill-wave"></i> Amount Due ($)</label>
+                <input type="number" id="payment-amount" min="0" step="0.01" value="50.00">
+                <p class="note">Pay this amount in cash at the clinic</p>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check-circle"></i> Confirm Booking
+                </button>
+                <button type="button" id="cancel-booking" class="btn btn-secondary">
+                    <i class="fas fa-times-circle"></i> Cancel
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <div id="booking-slip-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Your Appointment Slip</h3>
+                <button id="close-slip" class="btn-icon">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="slip-template" class="slip">
+                    <div class="slip-header">
+                        <img src="../assets/logo.svg" alt="NextInCare Logo" class="slip-logo">
+                        <h2>NextInCare</h2>
+                        <p class="slip-subtitle">Medical Appointment System</p>
+                    </div>
+                    
+                    <div class="slip-divider">
+                        <div class="ecg-line"></div>
+                    </div>
+                    
+                    <div class="slip-details">
+                        <div class="slip-row">
+                            <span class="slip-label">Appointment ID:</span>
+                            <span id="slip-id" class="slip-value">#HH-0000</span>
+                        </div>
+                        <div class="slip-row">
+                            <span class="slip-label">Patient Name:</span>
+                            <span id="slip-name" class="slip-value"></span>
+                        </div>
+                        <div class="slip-row">
+                            <span class="slip-label">Age / Blood Group:</span>
+                            <span id="slip-age-blood" class="slip-value"></span>
+                        </div>
+                        <div class="slip-row">
+                            <span class="slip-label">Service:</span>
+                            <span id="slip-service" class="slip-value"></span>
+                        </div>
+                        <div class="slip-row">
+                            <span class="slip-label">Date & Time:</span>
+                            <span id="slip-datetime" class="slip-value"></span>
+                        </div>
+                        <div class="slip-row">
+                            <span class="slip-label">Queue Position:</span>
+                            <span id="slip-queue" class="slip-value"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="slip-divider">
+                        <div class="ecg-line"></div>
+                    </div>
+                    
+                    <div class="slip-payment">
+                        <div class="slip-row">
+                            <span class="slip-label">Amount Due:</span>
+                            <span id="slip-amount" class="slip-value"></span>
+                        </div>
+                        <p class="slip-note">Please pay in cash at the clinic reception</p>
+                    </div>
+                    
+                    <div class="slip-footer">
+                        <p>Thank you for choosing NextInCare</p>
+                    </div>
+                </div>
+                
+                <div class="slip-actions">
+                    <button id="download-slip" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download Slip
+                    </button>
+                    <button id="print-slip" class="btn btn-secondary">
+                        <i class="fas fa-print"></i> Print Slip
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <script src="js/db.js" type="module"></script>
+<script src="js/ui.js" type="module"></script>
+<script src="js/booking.js" type="module"></script>
+</body>
+</html>
